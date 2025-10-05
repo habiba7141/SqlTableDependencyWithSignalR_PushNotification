@@ -1,0 +1,40 @@
+﻿@{
+    ViewData["Title"] = "Real-Time News Notifications";
+}
+
+<h2>📰 Real-Time News Notifications</h2>
+<p>Insert new rows into the <b>News</b> table in SQL Server to see instant notifications appear here.</p>
+
+<!-- مكتبات SignalR و Toastify -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.0/signalr.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+<script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+<script>
+   
+    const connection = new signalR.HubConnectionBuilder()
+        .withUrl("/newsHub") 
+        .build();
+
+    
+    connection.on("ReceiveNotification", function (message) {
+        console.log("📩 Received from Hub:", message);
+
+       
+        Toastify({
+            text: message,
+            duration: 5000,
+            gravity: "top",
+            position: "right",
+            close: true,
+            style: {
+                background: "linear-gradient(to right, #007bff, #00c851)"
+            }
+        }).showToast();
+    });
+
+    
+    connection.start()
+        .then(() => console.log("✅ Connected to SignalR Hub"))
+        .catch(err => console.error("❌ Connection Error:", err));
+</script>
