@@ -25,7 +25,7 @@ which then pushes a real-time message to all connected clients instantly — wit
 ## ⚡ How It Works
 
 1. **SignalR Hub** is created to broadcast messages to clients.  
-2. **SQLTableDependency** listens to a database table (e.g., `Orders`).  
+2. **SQLTableDependency** listens to a database table (e.g., `News`).  
 3. When a change occurs in the table (Insert / Update / Delete):
    - SQLTableDependency triggers an event.
    - The event calls the SignalR Hub.
